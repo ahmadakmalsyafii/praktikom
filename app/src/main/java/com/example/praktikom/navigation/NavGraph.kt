@@ -13,33 +13,14 @@ import com.example.praktikom.ui.presentation.main.MainScreen
 
 @Composable
 fun NavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    startDestination: Route
 ) {
     NavHost(
         navController  = navController,
-        startDestination = Route.AuthGraph
+        startDestination = startDestination
     ) {
         navigation<Route.AuthGraph>(startDestination = Route.Login) {
-
-//            composable<Route.Splash> {
-//                val vm: SplashViewModel = hiltViewModel()
-//                val isLoggedIn by vm.isLoggedIn.collectAsStateWithLifecycle()
-//
-//                SplashScreen(
-//                    isLoggedIn = isLoggedIn,
-//                    onNavigateToLogin = {
-//                        navController.navigate(Route.Login) {
-//                            popUpTo(Route.AuthGraph) { inclusive = true }
-//                        }
-//                    },
-//                    onNavigateToMain = {
-//                        navController.navigate(Route.MainGraph) {
-//                            popUpTo(Route.AuthGraph) { inclusive = true }
-//                        }
-//                    }
-//                )
-//            }
-
             composable<Route.Login> {
                 LoginScreen(
                     onLoginSuccess = {
@@ -54,6 +35,7 @@ fun NavGraph(
 
         composable<Route.MainGraph> {
             MainScreen(
+
             )
         }
     }
