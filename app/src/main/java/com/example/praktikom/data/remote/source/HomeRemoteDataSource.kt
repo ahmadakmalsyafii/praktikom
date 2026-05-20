@@ -26,8 +26,15 @@ class HomeRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getAnnouncement(): List<NotificationDto> {
+        val userId = supabaseClient.auth.currentUserOrNull()?.id
+            ?: throw Exception("User tidak login")
+
         return supabaseClient.postgrest["class_notifications"]
-            .select()
+            .select() {
+                filter {
+                    eq("asisten_id", userId)
+                }
+            }
             .decodeList<NotificationDto>()
     }
 

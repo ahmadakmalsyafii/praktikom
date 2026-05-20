@@ -60,7 +60,7 @@ fun HomeScreen(
     ) {
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
-        // Logo and Title Header
+
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -157,7 +157,7 @@ fun HomeScreen(
             }
         }
 
-        // Welcome Greeting
+
         item {
             Column {
                 Text(
@@ -243,7 +243,7 @@ fun HomeScreen(
             }
         }
 
-        // Announcements Card
+        // pengumuman
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),

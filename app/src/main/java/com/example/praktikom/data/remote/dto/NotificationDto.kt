@@ -12,7 +12,8 @@ import java.util.Locale
 @Serializable
 data class NotificationDto(
     val id: Int,
-    @SerialName("class_id") val classId: String,
+    @SerialName("class_id") val classId: Int,          // int4 in DB, not String
+    @SerialName("asisten_id") val asistenId: String? = null, // uuid, nullable
     val judul: String,
     val pesan: String,
     @SerialName("created_at") val createdAt: String
@@ -20,7 +21,11 @@ data class NotificationDto(
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NotificationDto.toDomain(): Announcement {
-    val date = ZonedDateTime.parse(this.createdAt)
+    
+    val normalized = this.createdAt
+        .replace(" ", "T")
+        .let { if (it.endsWith("+00")) it + ":00" else it }
+    val date = ZonedDateTime.parse(normalized)
     return Announcement(
         id = this.id.toString(),
         title = this.judul,
