@@ -3,7 +3,7 @@ package com.example.praktikom.ui.presentation.daftar_asisten_praktikum
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.praktikom.domain.model.Registration
-import com.example.praktikom.domain.repository.VacancyRepository
+import com.example.praktikom.domain.usecase.GetRegistrationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +19,7 @@ data class RiwayatPendaftaranUiState(
 
 @HiltViewModel
 class RiwayatPendaftaranViewModel @Inject constructor(
-    private val repository: VacancyRepository
+    private val getRegistrationsUseCase: GetRegistrationsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RiwayatPendaftaranUiState())
@@ -32,7 +32,7 @@ class RiwayatPendaftaranViewModel @Inject constructor(
     fun loadRegistrations() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            repository.getRegistrations()
+            getRegistrationsUseCase()
                 .onSuccess { list ->
                     _uiState.update { it.copy(registrations = list, isLoading = false) }
                 }

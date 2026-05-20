@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.praktikom.domain.model.Vacancy
-import com.example.praktikom.domain.repository.VacancyRepository
+import com.example.praktikom.domain.usecase.GetVacancyDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +20,7 @@ data class VacancyDetailUiState(
 
 @HiltViewModel
 class DetailLowonganViewModel @Inject constructor(
-    private val repository: VacancyRepository,
+    private val getVacancyDetailUseCase: GetVacancyDetailUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -38,7 +38,7 @@ class DetailLowonganViewModel @Inject constructor(
     fun loadVacancyDetail(id: Int = vacancyId) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            repository.getVacancyDetail(id)
+            getVacancyDetailUseCase(id)
                 .onSuccess { data ->
                     _uiState.update { it.copy(vacancy = data, isLoading = false) }
                 }

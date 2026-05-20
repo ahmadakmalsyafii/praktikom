@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.praktikom.domain.model.StudentEnrollment
-import com.example.praktikom.domain.repository.ClassRepository
+import com.example.praktikom.domain.usecase.GetStudentEnrollmentsUseCase
+import com.example.praktikom.domain.usecase.SendAnnouncementUseCase
 import com.example.praktikom.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +32,8 @@ data class KelasDetailState(
 
 @HiltViewModel
 class KelasDetailViewModel @Inject constructor(
-    private val classRepository: ClassRepository,
+    private val getStudentEnrollmentsUseCase: GetStudentEnrollmentsUseCase,
+    private val sendAnnouncementUseCase: SendAnnouncementUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -60,7 +62,7 @@ class KelasDetailViewModel @Inject constructor(
     private fun fetchStudents(classId: Int) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
-            classRepository.getStudentEnrollmentsWithPresence(classId).fold(
+            getStudentEnrollmentsUseCase(classId).fold(
                 onSuccess = { students ->
                     _state.update { it.copy(isLoading = false, students = students) }
                 },
@@ -90,7 +92,7 @@ class KelasDetailViewModel @Inject constructor(
 
         viewModelScope.launch {
             _state.update { it.copy(isSendingAnnouncement = true) }
-            classRepository.sendAnnouncement(
+            sendAnnouncementUseCase(
                 classId = _state.value.classId,
                 judul = currentTitle,
                 pesan = currentDesc

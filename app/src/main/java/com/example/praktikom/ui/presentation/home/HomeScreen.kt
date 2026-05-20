@@ -39,7 +39,7 @@ import com.example.praktikom.ui.theme.PrimaryOrange
 @Composable
 fun HomeScreen(
     onNavigateToDaftarAsprak: () -> Unit,
-    onNavigateToJadwal: () -> Unit,
+    onNavigateToJadwalPraktikum: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -190,7 +190,7 @@ fun HomeScreen(
                 ActionCard(
                     icon = Icons.Default.Class,
                     title = "Jadwal Praktikum",
-                    onClick = onNavigateToJadwal,
+                    onClick = onNavigateToJadwalPraktikum,
                     modifier = Modifier.weight(1f)
                 )
             }

@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.praktikom.domain.model.PresenceSession
-import com.example.praktikom.domain.repository.ClassRepository
+import com.example.praktikom.domain.usecase.CreatePresenceSessionUseCase
+import com.example.praktikom.domain.usecase.GetPresenceSessionsUseCase
 import com.example.praktikom.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +37,8 @@ data class PresensiState(
 
 @HiltViewModel
 class PresensiViewModel @Inject constructor(
-    private val classRepository: ClassRepository,
+    private val getPresenceSessionsUseCase: GetPresenceSessionsUseCase,
+    private val createPresenceSessionUseCase: CreatePresenceSessionUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -56,7 +58,7 @@ class PresensiViewModel @Inject constructor(
     private fun fetchSessions(classId: Int) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
-            classRepository.getPresenceSessions(classId).fold(
+            getPresenceSessionsUseCase(classId).fold(
                 onSuccess = { sessions ->
                     val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                     val today = df.format(Date())
@@ -93,7 +95,7 @@ class PresensiViewModel @Inject constructor(
 
             val pertemuanKe = s.sessions.size + 1
 
-            classRepository.createPresenceSession(
+            createPresenceSessionUseCase(
                 classId = s.classId,
                 pertemuanKe = pertemuanKe,
                 tanggal = s.date,

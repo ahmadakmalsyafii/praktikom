@@ -82,9 +82,13 @@ fun PresensiScreen(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.LightGray,
-                    unfocusedBorderColor = Color.LightGray
-                )
+                    focusedBorderColor = PrimaryBlue,
+                    unfocusedBorderColor = SecondaryBlue,
+                    focusedLabelColor = PrimaryBlue,
+                    unfocusedLabelColor = SecondaryBlue,
+                    cursorColor = PrimaryBlue
+                ),
+                textStyle = LocalTextStyle.current.copy(color = Color.Black)
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -100,9 +104,10 @@ fun PresensiScreen(
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         disabledTextColor = Color.Black,
-                        disabledBorderColor = Color.LightGray,
+                        disabledBorderColor = SecondaryBlue,
                         disabledPlaceholderColor = Color.Gray
-                    )
+                    ),
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black)
                 )
             }
 
@@ -122,7 +127,8 @@ fun PresensiScreen(
                             disabledTextColor = Color.Black,
                             disabledBorderColor = SecondaryBlue,
                             disabledPlaceholderColor = Color.Gray
-                        )
+                        ),
+                        textStyle = LocalTextStyle.current.copy(color = Color.Black)
                     )
                 }
                 Box(modifier = Modifier.weight(1f).clickable { showEndTimePicker = true }) {
@@ -138,7 +144,8 @@ fun PresensiScreen(
                             disabledTextColor = Color.Black,
                             disabledBorderColor = SecondaryBlue,
                             disabledPlaceholderColor = Color.Gray
-                        )
+                        ),
+                        textStyle = LocalTextStyle.current.copy(color = Color.Black)
                     )
                 }
             }

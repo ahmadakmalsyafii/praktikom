@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.praktikom.ui.theme.PrimaryBlue
+import com.example.praktikom.ui.theme.SecondaryBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -241,11 +243,13 @@ fun AnnouncementDialog(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor   = Color(0xFFF8FAFC),
-                        unfocusedContainerColor = Color(0xFFF8FAFC),
-                        focusedBorderColor      = Color.Transparent,
-                        unfocusedBorderColor    = Color.Transparent
-                    )
+                        focusedBorderColor = PrimaryBlue,
+                        unfocusedBorderColor = SecondaryBlue,
+                        focusedLabelColor = PrimaryBlue,
+                        unfocusedLabelColor = SecondaryBlue,
+                        cursorColor = PrimaryBlue
+                    ),
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -261,18 +265,20 @@ fun AnnouncementDialog(
                         .height(120.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor   = Color(0xFFF8FAFC),
-                        unfocusedContainerColor = Color(0xFFF8FAFC),
-                        focusedBorderColor      = Color.Transparent,
-                        unfocusedBorderColor    = Color.Transparent
-                    )
+                        focusedBorderColor = PrimaryBlue,
+                        unfocusedBorderColor = SecondaryBlue,
+                        focusedLabelColor = PrimaryBlue,
+                        unfocusedLabelColor = SecondaryBlue,
+                        cursorColor = PrimaryBlue
+                    ),
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black)
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
                     onClick = onSend,
                     enabled = !isSending && desc.isNotBlank() && title.isNotBlank(),
                     modifier = Modifier.fillMaxWidth().height(48.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF334155)),
+                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
                     shape = RoundedCornerShape(24.dp)
                 ) {
                     if (isSending) {

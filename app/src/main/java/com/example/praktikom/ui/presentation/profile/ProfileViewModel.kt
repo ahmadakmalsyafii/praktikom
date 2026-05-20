@@ -1,8 +1,9 @@
 package com.example.praktikom.ui.presentation.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.praktikom.domain.repository.AuthRepository
+
 import com.example.praktikom.domain.usecase.GetProfileUserUseCase
+import com.example.praktikom.domain.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +24,7 @@ data class ProfilUiState(
 @HiltViewModel
 class ProfilViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUserUseCase,
-    private val authRepository: AuthRepository
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfilUiState())
@@ -65,7 +66,7 @@ class ProfilViewModel @Inject constructor(
 
     fun logout(onSuccess: () -> Unit) {
         viewModelScope.launch {
-            authRepository.logout()
+            logoutUseCase()
                 .onSuccess {
                     onSuccess()
                 }

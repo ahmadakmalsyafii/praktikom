@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.praktikom.domain.model.User
 import com.example.praktikom.domain.model.Vacancy
-import com.example.praktikom.domain.repository.VacancyRepository
+import com.example.praktikom.domain.usecase.ApplyVacancyUseCase
+import com.example.praktikom.domain.usecase.GetVacancyDetailUseCase
 import com.example.praktikom.domain.usecase.GetProfileUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +29,8 @@ data class FormPendaftaranUiState(
 
 @HiltViewModel
 class FormPendaftaranViewModel @Inject constructor(
-    private val vacancyRepository: VacancyRepository,
+    private val getVacancyDetailUseCase: GetVacancyDetailUseCase,
+    private val applyVacancyUseCase: ApplyVacancyUseCase,
     private val getProfileUseCase: GetProfileUserUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -46,7 +48,7 @@ class FormPendaftaranViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val userResult = getProfileUseCase()
-            val vacancyResult = vacancyRepository.getVacancyDetail(vacancyId)
+            val vacancyResult = getVacancyDetailUseCase(vacancyId)
 
             if (vacancyResult.isSuccess && userResult.isSuccess) {
                 _uiState.update {
@@ -102,7 +104,7 @@ class FormPendaftaranViewModel @Inject constructor(
             val extension = name.substringAfterLast('.', "pdf")
             val formattedName = "${user.nim}_${vacancyId}_${System.currentTimeMillis()}.$extension"
 
-            vacancyRepository.applyVacancy(vacancyId, state.grade, bytes, formattedName)
+            applyVacancyUseCase(vacancyId, state.grade, bytes, formattedName)
                 .onSuccess {
                     _uiState.update { it.copy(isSubmitting = false, submitSuccess = true) }
                 }

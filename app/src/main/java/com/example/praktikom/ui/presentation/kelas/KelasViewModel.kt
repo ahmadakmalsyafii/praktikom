@@ -3,7 +3,7 @@ package com.example.praktikom.ui.presentation.kelas
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.praktikom.domain.model.Schedule
-import com.example.praktikom.domain.repository.ClassRepository
+import com.example.praktikom.domain.usecase.GetJadwalAsistenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,7 +24,7 @@ data class KelasState(
 
 @HiltViewModel
 class KelasViewModel @Inject constructor(
-    private val classRepository: ClassRepository
+    private val getJadwalAsistenUseCase: GetJadwalAsistenUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(KelasState())
@@ -37,7 +37,7 @@ class KelasViewModel @Inject constructor(
     fun fetchClasses() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
-            classRepository.getClassesByAssistant().fold(
+            getJadwalAsistenUseCase().fold(
                 onSuccess = { classes ->
                     _state.update { it.copy(isLoading = false, classes = classes) }
                 },

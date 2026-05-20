@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.praktikom.domain.model.Announcement
 import com.example.praktikom.domain.model.Banner
 import com.example.praktikom.domain.model.Schedule
-import com.example.praktikom.domain.repository.HomeRepository
+import com.example.praktikom.domain.usecase.GetAnnouncementUseCase
+import com.example.praktikom.domain.usecase.GetBannerUseCase
+import com.example.praktikom.domain.usecase.GetJadwalAsistenUseCase
 import com.example.praktikom.domain.usecase.GetProfileUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +27,9 @@ data class HomeUiState(
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUserUseCase,
-    private val homeRepository: HomeRepository
+    private val getBannerUseCase: GetBannerUseCase,
+    private val getAnnouncementUseCase: GetAnnouncementUseCase,
+    private val getJadwalAsistenUseCase: GetJadwalAsistenUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -40,9 +44,9 @@ class HomeViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true) }
 
             val user = getProfileUseCase().getOrNull()
-            val banners = homeRepository.getBanner().getOrDefault(emptyList())
-            val schedules = homeRepository.getSchedule().getOrDefault(emptyList())
-            val announcements = homeRepository.getAnnouncement().getOrDefault(emptyList())
+            val banners = getBannerUseCase().getOrDefault(emptyList())
+            val schedules = getJadwalAsistenUseCase().getOrDefault(emptyList())
+            val announcements = getAnnouncementUseCase().getOrDefault(emptyList())
 
             _uiState.update {
                 it.copy(
