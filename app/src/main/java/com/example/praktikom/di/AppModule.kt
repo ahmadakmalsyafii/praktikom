@@ -8,12 +8,16 @@ import com.example.praktikom.data.remote.source.HomeRemoteDataSource
 import com.example.praktikom.data.remote.source.HomeRemoteDataSourceImpl
 import com.example.praktikom.data.remote.source.UserRemoteDataSource
 import com.example.praktikom.data.remote.source.UserRemoteDataSourceImpl
+import com.example.praktikom.data.remote.source.VacancyRemoteDataSource
+import com.example.praktikom.data.remote.source.VacancyRemoteDataSourceImpl
 import com.example.praktikom.data.repository.AuthRepositoryImpl
 import com.example.praktikom.data.repository.HomeRepositoryImpl
 import com.example.praktikom.data.repository.UserRepositoryImpl
+import com.example.praktikom.data.repository.VacancyRepositoryImpl
 import com.example.praktikom.domain.repository.AuthRepository
 import com.example.praktikom.domain.repository.HomeRepository
 import com.example.praktikom.domain.repository.UserRepository
+import com.example.praktikom.domain.repository.VacancyRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -36,6 +40,10 @@ abstract class AppModule {
     abstract fun bindHomeRepository(
         homeRepositoryImpl: HomeRepositoryImpl
     ): HomeRepository
+    @Binds
+    abstract fun bindVacancyRepository(
+        vacancyRepositoryImpl: VacancyRepositoryImpl
+    ): VacancyRepository
 
 
     // Data Source
@@ -50,6 +58,11 @@ abstract class AppModule {
     ): HomeRemoteDataSource
 
     @Binds
+    abstract fun bindVacancyRemoteDataSource(
+        vacancyRemoteDataSourceImpl: VacancyRemoteDataSourceImpl
+    ): VacancyRemoteDataSource
+
+    @Binds
     abstract fun bindUserLocalDataSource(
         userLocalDataSourceImpl: UserLocalDataSourceImpl
     ): UserLocalDataSource
@@ -60,4 +73,4 @@ abstract class AppModule {
     ): SessionLocalDataSource
 
 
-}
+}
