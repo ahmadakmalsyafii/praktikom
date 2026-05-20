@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.praktikom.ui.theme.PrimaryBlue
 import com.example.praktikom.ui.theme.PrimaryOrange
+import com.example.praktikom.ui.theme.SecondaryBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +75,7 @@ fun FormPendaftaranScreen(
                     Text(
                         text = "Rekrutmen Asisten Praktikum",
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF1E3246),
+                        color = PrimaryBlue,
                         fontSize = 18.sp
                     )
                 },
@@ -83,7 +84,7 @@ fun FormPendaftaranScreen(
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Kembali",
-                            tint = Color(0xFF1E3246)
+                            tint = PrimaryBlue
                         )
                     }
                 },
@@ -95,6 +96,7 @@ fun FormPendaftaranScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White)
+                    .navigationBarsPadding()
                     .padding(16.dp)
             ) {
                 Button(
@@ -143,21 +145,25 @@ fun FormPendaftaranScreen(
                         text = "Data diri",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
-                        color = Color(0xFF1E3246)
+                        color = PrimaryBlue
                     )
 
-                    // Prefilled details
+                    // prefilled dari supabase auth
                     uiState.user?.let { user ->
                         OutlinedTextField(
                             value = user.nama,
                             onValueChange = {},
                             label = { Text("Nama Lengkap") },
+                            textStyle = LocalTextStyle.current.copy(color = PrimaryBlue),
                             readOnly = true,
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = Color(0xFFF9FAFC),
-                                unfocusedContainerColor = Color(0xFFF9FAFC)
+                                focusedBorderColor = PrimaryBlue,
+                                unfocusedBorderColor = SecondaryBlue,
+                                focusedLabelColor = PrimaryBlue,
+                                unfocusedLabelColor = SecondaryBlue,
+                                cursorColor = PrimaryBlue,
                             )
                         )
 
@@ -165,12 +171,16 @@ fun FormPendaftaranScreen(
                             value = user.nim,
                             onValueChange = {},
                             label = { Text("NIM") },
+                            textStyle = LocalTextStyle.current.copy(color = PrimaryBlue),
                             readOnly = true,
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = Color(0xFFF9FAFC),
-                                unfocusedContainerColor = Color(0xFFF9FAFC)
+                                focusedBorderColor = PrimaryBlue,
+                                unfocusedBorderColor = SecondaryBlue,
+                                focusedLabelColor = PrimaryBlue,
+                                unfocusedLabelColor = SecondaryBlue,
+                                cursorColor = PrimaryBlue,
                             )
                         )
 
@@ -178,12 +188,16 @@ fun FormPendaftaranScreen(
                             value = user.prodi,
                             onValueChange = {},
                             label = { Text("Program Studi") },
+                            textStyle = LocalTextStyle.current.copy(color = PrimaryBlue),
                             readOnly = true,
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = Color(0xFFF9FAFC),
-                                unfocusedContainerColor = Color(0xFFF9FAFC)
+                                focusedBorderColor = PrimaryBlue,
+                                unfocusedBorderColor = SecondaryBlue,
+                                focusedLabelColor = PrimaryBlue,
+                                unfocusedLabelColor = SecondaryBlue,
+                                cursorColor = PrimaryBlue,
                             )
                         )
 
@@ -191,24 +205,36 @@ fun FormPendaftaranScreen(
                             value = user.email,
                             onValueChange = {},
                             label = { Text("Email (wajib email ub)") },
+                            textStyle = LocalTextStyle.current.copy(color = PrimaryBlue),
                             readOnly = true,
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = Color(0xFFF9FAFC),
-                                unfocusedContainerColor = Color(0xFFF9FAFC)
+                                focusedBorderColor = PrimaryBlue,
+                                unfocusedBorderColor = SecondaryBlue,
+                                focusedLabelColor = PrimaryBlue,
+                                unfocusedLabelColor = SecondaryBlue,
+                                cursorColor = PrimaryBlue,
                             )
                         )
                     }
 
-                    // Prerequisite Grade field
+
                     OutlinedTextField(
                         value = uiState.grade,
                         onValueChange = { viewModel.onGradeChange(it) },
                         label = { Text("Nilai Mata Kuliah Syarat") },
+                        textStyle = LocalTextStyle.current.copy(color = PrimaryBlue),
                         placeholder = { Text("Contoh: A, B+, dll.") },
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = PrimaryBlue,
+                            unfocusedBorderColor = SecondaryBlue,
+                            focusedLabelColor = PrimaryBlue,
+                            unfocusedLabelColor = SecondaryBlue,
+                            cursorColor = PrimaryBlue,
+                        )
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -220,7 +246,7 @@ fun FormPendaftaranScreen(
                         color = Color(0xFF1E3246)
                     )
 
-                    // Document Picker Card
+
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),

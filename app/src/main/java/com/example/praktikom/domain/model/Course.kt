@@ -1,4 +1,8 @@
 package com.example.praktikom.domain.model
 
-class Course {
-}
+data class Course(
+    val id: Int,
+    val sks: Int,
+    val kodeMk: String,
+    val namaMk: String
+)

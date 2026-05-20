@@ -1,4 +1,4 @@
-package com.example.praktikom.ui.presentation.daftar_asisten_praktikum
+package com.example.praktikom.ui.presentation.daftar_asisten_praktikum.detail_lowongan
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -27,21 +27,28 @@ class DetailLowonganViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(VacancyDetailUiState())
     val uiState = _uiState.asStateFlow()
 
+    // Mengambil vacancyId dari argumen navigasi secara aman
     private val vacancyId: Int = checkNotNull(savedStateHandle["vacancyId"])
 
     init {
+        // Pemicu pertama kali saat ViewModel dibuat, UI cukup mengobservasi saja
         loadVacancyDetail()
     }
 
-    fun loadVacancyDetail() {
+    fun loadVacancyDetail(id: Int = vacancyId) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            repository.getVacancyDetail(vacancyId)
+            repository.getVacancyDetail(id)
                 .onSuccess { data ->
                     _uiState.update { it.copy(vacancy = data, isLoading = false) }
                 }
                 .onFailure { exception ->
-                    _uiState.update { it.copy(error = exception.message ?: "Terjadi kesalahan", isLoading = false) }
+                    _uiState.update {
+                        it.copy(
+                            error = exception.message ?: "Terjadi kesalahan",
+                            isLoading = false
+                        )
+                    }
                 }
         }
     }
