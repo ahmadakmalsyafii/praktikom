@@ -47,8 +47,8 @@ fun bottomNavItems() = listOf(
         unselectedIcon = Icons.Outlined.Class
     ),
     BottomNavItem(
-        label          = "Daftar Asprak",
-        route          = Route.Pesan,
+        label          = "Pinjam Barang",
+        route          = Route.PinjamBarang,
         selectedIcon   = Icons.Filled.AddToQueue,
         unselectedIcon = Icons.Outlined.AddToQueue
     ),
