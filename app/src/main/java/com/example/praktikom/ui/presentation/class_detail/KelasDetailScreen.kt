@@ -50,7 +50,6 @@ fun KelasDetailScreen(
                     }
                 },
                 actions = {
-                    // spacer agar judul benar-benar di tengah
                     Spacer(modifier = Modifier.width(48.dp))
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -72,7 +71,6 @@ fun KelasDetailScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // ── Info Kelas ─────────────────────────────────────────
             Card(
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -97,7 +95,6 @@ fun KelasDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // ── Action Buttons ─────────────────────────────────────
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -128,7 +125,6 @@ fun KelasDetailScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // ── List Mahasiswa ─────────────────────────────────────
             Text(
                 text = "List Mahasiswa",
                 fontSize = 18.sp,
@@ -195,7 +191,6 @@ fun KelasDetailScreen(
         }
     }
 
-    // ── Dialog Pengumuman ──────────────────────────────────────────
     if (state.showAnnouncementDialog) {
         AnnouncementDialog(
             title       = state.announcementTitle,

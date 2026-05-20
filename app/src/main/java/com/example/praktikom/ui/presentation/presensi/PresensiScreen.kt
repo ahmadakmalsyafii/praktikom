@@ -53,7 +53,6 @@ fun PresensiScreen(
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
-                // spacer icon kanan agar judul benar-benar di tengah
                 actions = {
                     Spacer(modifier = Modifier.width(48.dp))
                 },
@@ -76,7 +75,6 @@ fun PresensiScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // ── Form ──────────────────────────────────────────────
             OutlinedTextField(
                 value = state.topic,
                 onValueChange = { viewModel.onTopicChange(it) },
@@ -165,7 +163,6 @@ fun PresensiScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // ── Tab Berlangsung / Riwayat ──────────────────────────
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -226,7 +223,6 @@ fun PresensiScreen(
         }
     }
 
-    // ── DatePicker Dialog ──────────────────────────────────────────
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState()
         DatePickerDialog(
