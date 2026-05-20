@@ -109,6 +109,7 @@ fun ProfileScreen(
                             ProfileInfoItem("NIM", uiState.nim)
                             ProfileInfoItem("Program Studi", uiState.prodi)
                             ProfileInfoItem("Angkatan", uiState.angkatan)
+                            ProfileInfoItem("Role", uiState.role)
                         }
                     }
 

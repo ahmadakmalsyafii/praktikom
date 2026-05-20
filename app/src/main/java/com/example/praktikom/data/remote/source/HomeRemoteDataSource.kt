@@ -38,7 +38,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(
         return supabaseClient.postgrest["practicum_classes"]
             .select(Columns.raw( "*, class_enrollments!inner(*)")) {
                 filter {
-                    eq("class_enrollments.mahasiswa_id", userId)
+                    eq("class_enrollments.asisten_id", userId)
                 }
             }.decodeList<PracticumClassDto>()
     }

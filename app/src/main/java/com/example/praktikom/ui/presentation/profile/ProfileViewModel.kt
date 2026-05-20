@@ -16,6 +16,7 @@ data class ProfilUiState(
     val email: String = "-",
     val prodi: String = "-",
     val angkatan: String = "-",
+    val role: String = "-",
     val fotoUrl: String? = null
 )
 
@@ -42,6 +43,7 @@ class ProfilViewModel @Inject constructor(
                         email = user.email,
                         angkatan = user.angkatan?: "-",
                         fotoUrl = user.fotoUrl,
+                        role = user.role?: "-",
                         prodi = user.prodi
                     )
                 }
@@ -53,6 +55,7 @@ class ProfilViewModel @Inject constructor(
                             email = "-",
                             angkatan = "-",
                             fotoUrl = null,
+                            role = "-",
                             prodi = "-"
                         )
                     }
