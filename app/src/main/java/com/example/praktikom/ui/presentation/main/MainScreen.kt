@@ -14,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.praktikom.navigation.PraktikomBottomNav
 import com.example.praktikom.navigation.Route
+import com.example.praktikom.ui.presentation.home.HomeScreen
 import com.example.praktikom.ui.presentation.profile.ProfileScreen
 
 @Composable
@@ -44,7 +45,10 @@ fun MainScreen(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<Route.Home> {
-                Text("Beranda Screen", modifier = Modifier.fillMaxSize().padding(16.dp))
+                HomeScreen(
+                    onNavigateToDaftarAsprak = { navController.navigate(Route.PendaftaranAsisten) },
+                    onNavigateToJadwal = { navController.navigate(Route.Kelas) }
+                )
             }
             composable<Route.Kelas> {
                 Text("Daftar Kelas Praktikum", modifier = Modifier.fillMaxSize().padding(16.dp))

@@ -4,11 +4,15 @@ import com.example.praktikom.data.local.source.SessionLocalDataSource
 import com.example.praktikom.data.local.source.SessionLocalDataSourceImpl
 import com.example.praktikom.data.local.source.UserLocalDataSource
 import com.example.praktikom.data.local.source.UserLocalDataSourceImpl
+import com.example.praktikom.data.remote.source.HomeRemoteDataSource
+import com.example.praktikom.data.remote.source.HomeRemoteDataSourceImpl
 import com.example.praktikom.data.remote.source.UserRemoteDataSource
 import com.example.praktikom.data.remote.source.UserRemoteDataSourceImpl
 import com.example.praktikom.data.repository.AuthRepositoryImpl
+import com.example.praktikom.data.repository.HomeRepositoryImpl
 import com.example.praktikom.data.repository.UserRepositoryImpl
 import com.example.praktikom.domain.repository.AuthRepository
+import com.example.praktikom.domain.repository.HomeRepository
 import com.example.praktikom.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -28,12 +32,22 @@ abstract class AppModule {
     abstract fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
+    @Binds
+    abstract fun bindHomeRepository(
+        homeRepositoryImpl: HomeRepositoryImpl
+    ): HomeRepository
+
 
     // Data Source
     @Binds
     abstract fun bindUserRemoteDataSource(
         userRemoteDataSourceImpl: UserRemoteDataSourceImpl
     ): UserRemoteDataSource
+
+    @Binds
+    abstract fun bindHomeRemoteDataSource(
+        homeRemoteDataSource: HomeRemoteDataSourceImpl
+    ): HomeRemoteDataSource
 
     @Binds
     abstract fun bindUserLocalDataSource(

@@ -5,10 +5,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddToQueue
 import androidx.compose.material.icons.filled.Class
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.AddToQueue
 import androidx.compose.material.icons.outlined.Class
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.MailOutline
@@ -45,10 +47,10 @@ fun bottomNavItems() = listOf(
         unselectedIcon = Icons.Outlined.Class
     ),
     BottomNavItem(
-        label          = "Pesan",
+        label          = "Daftar Asprak",
         route          = Route.Pesan,
-        selectedIcon   = Icons.Filled.MailOutline,
-        unselectedIcon = Icons.Outlined.MailOutline
+        selectedIcon   = Icons.Filled.AddToQueue,
+        unselectedIcon = Icons.Outlined.AddToQueue
     ),
     BottomNavItem(
         label          = "Profil",
