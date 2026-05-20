@@ -11,8 +11,16 @@ import com.example.praktikom.data.remote.source.UserRemoteDataSourceImpl
 import com.example.praktikom.data.repository.AuthRepositoryImpl
 import com.example.praktikom.data.repository.HomeRepositoryImpl
 import com.example.praktikom.data.repository.UserRepositoryImpl
+import com.example.praktikom.data.repository.InventoryRepositoryImpl
+import com.example.praktikom.data.repository.ClassRepositoryImpl
+import com.example.praktikom.data.remote.source.InventoryRemoteDataSource
+import com.example.praktikom.data.remote.source.InventoryRemoteDataSourceImpl
+import com.example.praktikom.data.remote.source.ClassRemoteDataSource
+import com.example.praktikom.data.remote.source.ClassRemoteDataSourceImpl
 import com.example.praktikom.domain.repository.AuthRepository
 import com.example.praktikom.domain.repository.HomeRepository
+import com.example.praktikom.domain.repository.InventoryRepository
+import com.example.praktikom.domain.repository.ClassRepository
 import com.example.praktikom.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -37,6 +45,15 @@ abstract class AppModule {
         homeRepositoryImpl: HomeRepositoryImpl
     ): HomeRepository
 
+    @Binds
+    abstract fun bindInventoryRepository(
+        inventoryRepositoryImpl: InventoryRepositoryImpl
+    ): InventoryRepository
+
+    @Binds
+    abstract fun bindClassRepository(
+        classRepositoryImpl: ClassRepositoryImpl
+    ): ClassRepository
 
     // Data Source
     @Binds
@@ -48,6 +65,16 @@ abstract class AppModule {
     abstract fun bindHomeRemoteDataSource(
         homeRemoteDataSource: HomeRemoteDataSourceImpl
     ): HomeRemoteDataSource
+
+    @Binds
+    abstract fun bindInventoryRemoteDataSource(
+        inventoryRemoteDataSourceImpl: InventoryRemoteDataSourceImpl
+    ): InventoryRemoteDataSource
+
+    @Binds
+    abstract fun bindClassRemoteDataSource(
+        classRemoteDataSourceImpl: ClassRemoteDataSourceImpl
+    ): ClassRemoteDataSource
 
     @Binds
     abstract fun bindUserLocalDataSource(

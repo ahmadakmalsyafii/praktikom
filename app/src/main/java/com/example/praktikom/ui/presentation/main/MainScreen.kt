@@ -17,13 +17,16 @@ import com.example.praktikom.navigation.Route
 import com.example.praktikom.ui.presentation.daftar_asisten_praktikum.DaftarAsistenScreen
 import com.example.praktikom.ui.presentation.home.HomeScreen
 import com.example.praktikom.ui.presentation.jadwal_praktikum.JadwalPraktikumScreen
+import com.example.praktikom.ui.presentation.kelas.KelasScreen
+import com.example.praktikom.ui.presentation.pinjam_barang.PinjamBarangScreen
 import com.example.praktikom.ui.presentation.profile.ProfileScreen
 
 @Composable
 fun MainScreen(
     onLogout: () -> Unit,
     onNavigateToDaftarAsprak: () -> Unit,
-    onNavigateToJadwalPraktikum: () -> Unit
+    onNavigateToJadwalPraktikum: () -> Unit,
+    onNavigateToClassDetail: (Int, String, String, String) -> Unit
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -55,10 +58,12 @@ fun MainScreen(
                 )
             }
             composable<Route.Kelas> {
-                Text("Daftar Kelas Praktikum", modifier = Modifier.fillMaxSize().padding(16.dp))
+                KelasScreen(
+                    onNavigateToDetail = onNavigateToClassDetail
+                )
             }
             composable<Route.PinjamBarang> {
-                Text("Peminjaman Barang", modifier = Modifier.fillMaxSize().padding(16.dp))
+                PinjamBarangScreen()
             }
             composable<Route.Profil> {
                 ProfileScreen(onLogout = onLogout)
