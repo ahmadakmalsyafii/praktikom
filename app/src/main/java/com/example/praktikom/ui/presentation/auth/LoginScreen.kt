@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -19,7 +22,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,6 +40,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -42,6 +49,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.praktikom.R
+import com.example.praktikom.ui.theme.ErrorRed
+import com.example.praktikom.ui.theme.PrimaryBlue
+import com.example.praktikom.ui.theme.SecondaryBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +63,7 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     val isLoading by viewModel.isLoading.collectAsState()
     val loginResult by viewModel.loginResult.collectAsState()
 
@@ -61,6 +72,7 @@ fun LoginScreen(
             viewModel.resetResult()
             onLoginSuccess()
         }?.onFailure { error ->
+            errorMessage = "Email atau kata sandi salah."
             viewModel.resetResult()
         }
     }
@@ -68,7 +80,8 @@ fun LoginScreen(
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .padding(24.dp)
+            .systemBarsPadding(),
         horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -81,7 +94,7 @@ fun LoginScreen(
             text = "Masuk",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF2C3E50),
+            color = PrimaryBlue,
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         )
         Text(
@@ -94,19 +107,44 @@ fun LoginScreen(
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = {
+                email = it
+                errorMessage = null },
             label = { Text("Email") },
+            textStyle = LocalTextStyle.current.copy(color = Color.Black),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
-            singleLine = true
+            isError = errorMessage != null,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = PrimaryBlue,
+                unfocusedBorderColor = SecondaryBlue,
+                focusedLabelColor = PrimaryBlue,
+                unfocusedLabelColor = SecondaryBlue,
+                cursorColor = PrimaryBlue,
+                errorCursorColor = ErrorRed,
+                errorBorderColor = ErrorRed
+            ),
+            keyboardOptions = KeyboardOptions(
+                autoCorrect = false,
+                keyboardType = KeyboardType.Email
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    defaultKeyboardAction(ImeAction.Next)
+                }
+            ),
+            singleLine = true,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { password = it
+                            errorMessage = null },
             label = { Text("Kata sandi") },
+            isError = errorMessage != null,
+            textStyle = LocalTextStyle.current.copy(color = Color.Black),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 val image = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
@@ -114,16 +152,35 @@ fun LoginScreen(
                     Icon(imageVector = image, contentDescription = null)
                 }
             },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = PrimaryBlue,
+                unfocusedBorderColor = SecondaryBlue,
+                focusedLabelColor = PrimaryBlue,
+                unfocusedLabelColor = SecondaryBlue,
+                cursorColor = PrimaryBlue,
+                errorCursorColor = ErrorRed,
+                errorBorderColor = ErrorRed
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    defaultKeyboardAction(ImeAction.Done)
+                    viewModel.login(email, password)
+                }
+            ),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             singleLine = true
         )
 
-        TextButton(
-            onClick = { /* Lupa sandi */ },
-            modifier = Modifier.align(Alignment.End)
-        ) {
-            Text("Lupa kata sandi?", color = Color(0xFF44607B))
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage!!,
+                color = ErrorRed,
+                fontSize = 12.sp,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .align(Alignment.Start)
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -136,7 +193,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF44607B)),
+            colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
             shape = RoundedCornerShape(25.dp)
         ) {
             if (isLoading) {

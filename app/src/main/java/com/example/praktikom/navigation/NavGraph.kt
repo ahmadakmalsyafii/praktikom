@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.praktikom.ui.presentation.auth.LoginScreen
 import com.example.praktikom.ui.presentation.main.MainScreen
+import com.example.praktikom.ui.presentation.profile.ProfileScreen
 
 @Composable
 fun NavGraph(
@@ -35,7 +36,11 @@ fun NavGraph(
 
         composable<Route.MainGraph> {
             MainScreen(
-
+                onLogout = {
+                    navController.navigate(Route.AuthGraph) {
+                        popUpTo(Route.MainGraph) { inclusive = true }
+                    }
+                }
             )
         }
     }

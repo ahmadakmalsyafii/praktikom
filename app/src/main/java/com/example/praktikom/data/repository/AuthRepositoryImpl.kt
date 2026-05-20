@@ -2,14 +2,16 @@ package com.example.praktikom.data.repository
 
 import com.example.praktikom.domain.repository.AuthRepository
 import io.github.jan.supabase.SupabaseClient
-import com.example.praktikom.data.local.SessionManager
+import com.example.praktikom.data.local.source.SessionLocalDataSource
+import com.example.praktikom.data.local.source.UserLocalDataSource
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val supabaseClient: SupabaseClient,
-    private val sessionManager: SessionManager
+    private val sessionLocalDataSource: SessionLocalDataSource,
+    private val userLocalDataSource: UserLocalDataSource
 ) : AuthRepository {
 
     override suspend fun login(email: String, password: String): Result<Unit> {
@@ -18,7 +20,7 @@ class AuthRepositoryImpl @Inject constructor(
                 this.email = email
                 this.password = password
             }
-            sessionManager.saveLoginState(true)
+            sessionLocalDataSource.saveLoginState(true)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
@@ -26,13 +28,14 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun isUserLoggedIn(): Boolean {
-        return sessionManager.isLoggedIn()
+        return sessionLocalDataSource.isLoggedIn()
     }
 
-    suspend fun logout(): Result<Unit> {
+    override suspend fun logout(): Result<Unit> {
         return try {
             supabaseClient.auth.signOut()
-            sessionManager.clearSession()
+            sessionLocalDataSource.clearSession()
+            userLocalDataSource.clearUser()
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

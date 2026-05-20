@@ -20,6 +20,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
+import com.example.praktikom.ui.theme.PrimaryBlue
+import com.example.praktikom.ui.theme.PrimaryOrange
 
 data class BottomNavItem(
     val label       : String,
@@ -63,9 +65,7 @@ fun PraktikomBottomNav(
     modifier          : Modifier = Modifier
 ) {
     NavigationBar(
-        modifier         = modifier
-            .height(80.dp),
-        windowInsets = WindowInsets(top = 4.dp),
+        modifier         = modifier,
         containerColor   = Color(0xFF1E3246),
         contentColor     = Color.White
     ) {
@@ -89,11 +89,11 @@ fun PraktikomBottomNav(
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor   = Color(0xFFF26522),
-                    selectedTextColor   = Color(0xFFF26522),
-                    unselectedIconColor = Color.White.copy(alpha = 0.6f),
-                    unselectedTextColor = Color.White.copy(alpha = 0.6f),
-                    indicatorColor      = Color(0xFF1E3246),
+                    selectedIconColor   = PrimaryOrange,
+                    selectedTextColor   = PrimaryOrange,
+                    unselectedIconColor = Color.White,
+                    unselectedTextColor = Color.White,
+                    indicatorColor      = PrimaryBlue,
                 )
             )
         }

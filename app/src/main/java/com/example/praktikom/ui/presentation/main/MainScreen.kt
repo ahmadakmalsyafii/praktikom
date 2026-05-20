@@ -14,9 +14,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.praktikom.navigation.PraktikomBottomNav
 import com.example.praktikom.navigation.Route
+import com.example.praktikom.ui.presentation.profile.ProfileScreen
 
 @Composable
 fun MainScreen(
+    onLogout: () -> Unit,
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -48,10 +50,10 @@ fun MainScreen(
                 Text("Daftar Kelas Praktikum", modifier = Modifier.fillMaxSize().padding(16.dp))
             }
             composable<Route.Pesan> {
-                Text("Pesan/Notifikasi", modifier = Modifier.fillMaxSize().padding(16.dp))
+                Text("Daftar Asprak", modifier = Modifier.fillMaxSize().padding(16.dp))
             }
             composable<Route.Profil> {
-                Text("Profil Pengguna", modifier = Modifier.fillMaxSize().padding(16.dp))
+                ProfileScreen(onLogout = onLogout)
             }
         }
     }
