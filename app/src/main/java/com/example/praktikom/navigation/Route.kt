@@ -20,6 +20,12 @@ sealed interface Route {
     @Serializable data object PendaftaranAsisten    : Route
 
     @Serializable data object JadwalPraktikum    : Route
+    @Serializable data class  DetailLowongan(val vacancyId: Int) : Route
+    @Serializable data class  FormPendaftaran(val vacancyId: Int) : Route
+    @Serializable data object RiwayatPendaftaran    : Route
+    @Serializable data class  Presensi(val assignmentId: String) : Route
+    @Serializable data class  Pengumuman(val assignmentId: String) : Route
+    @Serializable data object Inventaris            : Route
     @Serializable data class KelasDetailScreen(
         val classId: Int,
         val subject: String,

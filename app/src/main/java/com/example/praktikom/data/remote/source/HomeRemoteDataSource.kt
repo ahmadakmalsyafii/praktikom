@@ -26,8 +26,15 @@ class HomeRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getAnnouncement(): List<NotificationDto> {
+        val userId = supabaseClient.auth.currentUserOrNull()?.id
+            ?: throw Exception("User tidak login")
+
         return supabaseClient.postgrest["class_notifications"]
-            .select()
+            .select() {
+                filter {
+                    eq("asisten_id", userId)
+                }
+            }
             .decodeList<NotificationDto>()
     }
 
@@ -38,7 +45,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(
         return supabaseClient.postgrest["practicum_classes"]
             .select(Columns.raw( "*, class_enrollments!inner(*)")) {
                 filter {
-                    eq("class_enrollments.mahasiswa_id", userId)
+                    eq("class_enrollments.asisten_id", userId)
                 }
             }.decodeList<PracticumClassDto>()
     }
