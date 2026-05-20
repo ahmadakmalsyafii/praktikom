@@ -1,19 +1,14 @@
 package com.example.praktikom.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.praktikom.ui.presentation.auth.LoginScreen
 import com.example.praktikom.ui.presentation.daftar_asisten_praktikum.DaftarAsistenScreen
-import com.example.praktikom.ui.presentation.home.HomeScreen
 import com.example.praktikom.ui.presentation.jadwal_praktikum.JadwalPraktikumScreen
 import com.example.praktikom.ui.presentation.main.MainScreen
-import com.example.praktikom.ui.presentation.profile.ProfileScreen
 
 @Composable
 fun NavGraph(
@@ -41,19 +36,21 @@ fun NavGraph(
                     navController.navigate(Route.AuthGraph) {
                         popUpTo(Route.MainGraph) { inclusive = true }
                     }
+                } ,
+                onNavigateToDaftarAsprak = {
+                    navController.navigate(Route.PendaftaranAsisten)
+                },
+                onNavigateToJadwalPraktikum = {
+                    navController.navigate(Route.JadwalPraktikum)
                 }
             )
         }
-        composable<Route.Home> {
-            HomeScreen(
-                onNavigateToDaftarAsprak = { navController.navigate(Route.PendaftaranAsisten) },
-                onNavigateToJadwal = { navController.navigate(Route.Kelas) } // Asumsi rute jadwal adalah kelas
-            )
-        }
+
         composable<Route.PendaftaranAsisten> {
             DaftarAsistenScreen()
         }
-        composable<Route.Kelas> {
+
+        composable<Route.JadwalPraktikum> {
             JadwalPraktikumScreen()
         }
     }

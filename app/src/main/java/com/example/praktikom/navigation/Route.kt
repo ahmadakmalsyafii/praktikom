@@ -14,10 +14,12 @@ sealed interface Route {
 
     @Serializable data object Home      : Route
     @Serializable data object Kelas     : Route
-    @Serializable data object Pesan     : Route
+    @Serializable data object PinjamBarang    : Route
     @Serializable data object Profil    : Route
 
     @Serializable data object PendaftaranAsisten    : Route
+
+    @Serializable data object JadwalPraktikum    : Route
     @Serializable data object DetailLowongan        : Route
     @Serializable data class  Presensi(val assignmentId: String) : Route
     @Serializable data class  Pengumuman(val assignmentId: String) : Route

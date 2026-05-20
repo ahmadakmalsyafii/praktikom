@@ -58,13 +58,12 @@ fun HomeScreen(
     ) {
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
-        // HEADER LOGO & NAMA APLIKASI
+
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     painter = painterResource(id = R.drawable.logo_praktikom), // Pastikan ada icon logo
                     contentDescription = "Logo",
-                    tint = Color(0xFFF26522),
                     modifier = Modifier.size(32.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -77,7 +76,7 @@ fun HomeScreen(
             }
         }
 
-        // CAROUSEL BANNER
+
         item {
             val pagerState = rememberPagerState(pageCount = { uiState.banners.size })
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -96,7 +95,7 @@ fun HomeScreen(
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
-                        // Gradient Overlay
+
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -117,8 +116,6 @@ fun HomeScreen(
                         }
                     }
                 }
-
-                // Pager Dots
                 Row(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -139,7 +136,7 @@ fun HomeScreen(
             }
         }
 
-        // GREETING
+
         item {
             Text(
                 text = "Halo, ${uiState.userName}",
@@ -149,13 +146,13 @@ fun HomeScreen(
             )
         }
 
-        // GRID 2 COLUMN (Action Buttons & Jadwal)
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Column 1: Buttons
+
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -164,7 +161,7 @@ fun HomeScreen(
                     ActionCard(icon = Icons.Default.Class, title = "Jadwal Praktikum", onClick = onNavigateToJadwal)
                 }
 
-                // Column 2: Jadwal
+
                 Card(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(16.dp),
@@ -187,7 +184,6 @@ fun HomeScreen(
             }
         }
 
-        // PENGUMUMAN
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -213,7 +209,7 @@ fun HomeScreen(
             }
         }
 
-        item { Spacer(modifier = Modifier.height(80.dp)) } // Spacing for Bottom Nav
+        item { Spacer(modifier = Modifier.height(80.dp)) }
     }
 }
 
@@ -264,7 +260,6 @@ fun AnnouncementItem(announcement: Announcement) {
             .fillMaxWidth()
             .padding(vertical = 6.dp)
     ) {
-        // Kotak Tanggal
         Column(
             modifier = Modifier
                 .background(Color(0xFFE0E0E0), RoundedCornerShape(8.dp))
@@ -275,7 +270,6 @@ fun AnnouncementItem(announcement: Announcement) {
             Text(text = announcement.dateMonth, fontSize = 12.sp, color = Color.DarkGray)
         }
         Spacer(modifier = Modifier.width(12.dp))
-        // Teks Pengumuman
         Column(modifier = Modifier.align(Alignment.CenterVertically)) {
             Text(text = announcement.title, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = Color.Black, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text(text = announcement.message, fontSize = 12.sp, color = Color.Gray, maxLines = 2, overflow = TextOverflow.Ellipsis)

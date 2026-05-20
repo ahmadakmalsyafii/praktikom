@@ -14,12 +14,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.praktikom.navigation.PraktikomBottomNav
 import com.example.praktikom.navigation.Route
+import com.example.praktikom.ui.presentation.daftar_asisten_praktikum.DaftarAsistenScreen
 import com.example.praktikom.ui.presentation.home.HomeScreen
+import com.example.praktikom.ui.presentation.jadwal_praktikum.JadwalPraktikumScreen
 import com.example.praktikom.ui.presentation.profile.ProfileScreen
 
 @Composable
 fun MainScreen(
     onLogout: () -> Unit,
+    onNavigateToDaftarAsprak: () -> Unit,
+    onNavigateToJadwalPraktikum: () -> Unit
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -46,15 +50,15 @@ fun MainScreen(
         ) {
             composable<Route.Home> {
                 HomeScreen(
-                    onNavigateToDaftarAsprak = { navController.navigate(Route.PendaftaranAsisten) },
-                    onNavigateToJadwal = { navController.navigate(Route.Kelas) }
+                    onNavigateToDaftarAsprak = onNavigateToDaftarAsprak,
+                    onNavigateToJadwal = onNavigateToJadwalPraktikum
                 )
             }
             composable<Route.Kelas> {
                 Text("Daftar Kelas Praktikum", modifier = Modifier.fillMaxSize().padding(16.dp))
             }
-            composable<Route.Pesan> {
-                Text("Daftar Asprak", modifier = Modifier.fillMaxSize().padding(16.dp))
+            composable<Route.PinjamBarang> {
+                Text("Peminjaman Barang", modifier = Modifier.fillMaxSize().padding(16.dp))
             }
             composable<Route.Profil> {
                 ProfileScreen(onLogout = onLogout)
